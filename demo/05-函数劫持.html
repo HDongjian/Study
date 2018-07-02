@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数劫持</title>
+</head>
+
+<body>
+<button class="show-confirm">函数劫持</button>
+</body>
+<script>
+  const hijack = (obj, method, fun) => {
+    let orig = obj[method]
+    obj[method] = fun(orig)
+  }
+
+  hijack(window, 'confirm', (orig) => {
+    return (text) => {
+      alert('HELP ME PLZ!!!')
+      if (orig.call(this, text)) {
+        alert('YOU SEEMS FINE AND I AM LEAVING, GOOD BYE!')
+      } else {
+        alert('HOLD ON! I AM COMING!!')
+      }
+    }
+  })
+  window.alert =function(){
+    console.log('new Alert')
+  }
+  document.querySelector('.show-confirm').onclick = () => {
+    confirm('ARE YOU OK?')
+  }
+</script>
+
+</html>

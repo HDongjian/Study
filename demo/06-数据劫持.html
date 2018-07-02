@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据劫持</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+</body>
+<script>
+    var data = {
+        name: 'lhl'
+    }
+    document.querySelector('#input').oninput = function(){
+        data.name = this.value;
+    }
+    Object.keys(data).forEach(function (key) {
+        Object.defineProperty(data, key, {
+            enumerable: true,
+            configurable: true,
+            get: function (data) {
+                console.log(data+'get');
+            },
+            set: function (data) {
+                console.log(data+' set');
+            }
+        })
+    })
+</script>
+
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据类型详解</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var num = 1;
+    num2 = num;
+    num++;
+    console.log(num2);
+    var arr = [1, 3]
+    arr2 = arr;
+    arr.push(3);
+    console.log(arr2)
+
+    //    1.字符串类型
+    // console.dir(String)
+    // console.log(new String('151515'))
+    var str = new String('hhhh');
+    var str1 = 'hhhh';
+    var str2 = String('hhhh')
+    console.dir(Object.prototype.toString.call(str)) //[object String]
+    console.dir(Object.prototype.toString.call(str1)) //[object String]
+    console.dir(Object.prototype.toString.call(str2)) //[object String]
+    console.log(str) //object
+    console.dir(str1) //string
+    console.dir(typeof str2) //string
+    console.dir(Object.prototype.toString.call(new String()))
+    console.log(str === str1) //false
+    console.log(str2 === str1) //true
+
+    var str = '123';
+    var num = 123;
+    var unde;
+    var nul = null;
+    var bool = true;
+
+    console.log(typeof String(num))
+    console.log(typeof num.toString())
+
+    console.log(typeof Number(str)) //Number
+    console.log(typeof parseInt(str)) //Number
+    console.log(typeof parseFloat(str)) //Number
+    var person = new Object();
+    person.name = "Micheal";
+    person.age = 24;
+    var person = {
+        name: "Micheal",
+        age: 24
+    };
+
+    console.dir(Object.prototype.toString.call(String)) //[object Function]
+    console.dir(Object.prototype.toString.call(Number)) //[object Function]
+    console.dir(Object.prototype.toString.call(Array)) //[object Function]
+    console.dir(Object.prototype.toString.call(Object)) //[object Function]
+    console.dir(Object.prototype.toString.call(Function)) //[object Function]
+    var fun = new Function('console.log(this)');
+    console.log(fun)
+    fun();
+    // ƒ anonymous(
+    // ) {
+    //     return 123
+    // }
+    var foo02 = new function () {
+        var temp = 100;
+        this.temp = 200;
+        return temp + this.temp;
+    }
+
+    console.log(typeof (foo02));
+    console.dir(foo02);
+    console.log(window)
+    console.log(Number(undefined))
+
+    console.log(isNaN('123'))
+    console.log(isNaN('abc'))
+    var str = '1231';
+    var num = '12.854323';
+    console.log(parseInt(num))
+    console.log(typeof parseFloat(num))
+    var fun = function () {
+
+    }
+    var fun2 = new Function('return 123')
+    fun();
+    console.log(fun2())
+    var Fun = function () { }
+    new Fun;
+    var num = 1;
+    console.dir(num)
+</script>
+
+</html>

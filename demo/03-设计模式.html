@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>设计模式</title>
+    <script>
+        // 1.工厂模式
+        var factory = function (name) {
+            var obj = {};
+            obj.name = name;
+            return obj
+        }
+        var lab = factory('工厂模式')
+        console.log(lab)
+        // 2.订阅者模式
+        var EventCenter = (function () {
+            var events = {};
+            // 绑定事件 添加回调
+            function on(evt, handler) {
+                events[evt] = events[evt] || [];
+                events[evt].push({
+                    handler: handler
+                })
+                console.log(events)
+            }
+            function fire(evt, arg) {
+                if (!events[evt]) {
+                    return
+                }
+                for (var i = 0; i < events[evt].length; i++) {
+                    events[evt][i].handler(arg);
+                }
+            }
+            function off(evt) {
+                delete events[evt];
+                console.log(events)
+            }
+            return {
+                on: on,
+                fire: fire,
+                off: off
+            }
+        }());
+        var number = 1;
+        EventCenter.on('click', function (data) {
+            console.log('click 事件' + data + number++ + '次');
+        });
+        EventCenter.on('click', function (data) {
+            console.log('click 事件' + data + number++ + '次');
+        });
+        // EventCenter.off('click');   //  只绑定一次
+        // EventCenter.on('click', function (data) {
+        //     console.log('click 事件' + data + number++ + '次');
+        // });
+
+        EventCenter.fire('click', '绑定');
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

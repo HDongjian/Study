@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数节流&函数防抖</title>
+    <style>
+        #panel{
+            height: 500px;
+            width: 500px;
+            border:1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+    <div id="panel"></div>
+</body>
+<script>
+    // 函数防抖
+    function debounce(func, delay) {
+        var timeout;
+        return function (e) {
+            console.log("清除", timeout, e.target.value)
+            clearTimeout(timeout);
+            // console.log(arguments)
+            var context = this, args = arguments
+            console.log("新的", timeout, e.target.value)
+            timeout = setTimeout(function () {
+                console.log("----")
+                func.apply(context, args);
+            }, delay)
+        };
+    };
+
+    var validate = debounce(function (e) {
+        console.log("change", e.target.value, new Date - 0)
+    }, 1000);
+
+    // 绑定监听
+    document.querySelector("input").addEventListener('input', validate);
+
+    // 函数节流
+    function throttle(fn, threshhold) {
+        var timeout
+        var start = new Date;
+        var threshhold = threshhold || 160
+        return function () {
+            var context = this, args = arguments, curr = new Date() - 0
+            clearTimeout(timeout)//总是干掉事件回调
+            if (curr - start >= threshhold) {
+                console.log("now", curr, curr - start)//注意这里相减的结果，都差不多是160左右
+                fn.apply(context, args) //只执行一部分方法，这些方法是在某个时间段内执行一次
+                start = curr
+            } else {
+                //让方法在脱离事件后也能执行一次
+                timeout = setTimeout(function () {
+                    fn.apply(context, args)
+                }, threshhold);
+            }
+        }
+    }
+    var mousemove = throttle(function (e) {
+        console.log(e.pageX, e.pageY)
+    },1000);
+
+    // 绑定监听
+    document.querySelector("#panel").addEventListener('mousemove', mousemove);
+
+    function test (a,b,c){
+        console.log(arguments)
+    }
+    test(4,2,3)
+</script>
+
+</html>

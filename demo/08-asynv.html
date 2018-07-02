@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>asynv</title>
+    <script>
+        // async function asyncFn() {
+        //     return 'hello world';
+        // }
+        // // console.log(asyncFn());
+        // async function asyncFn() {
+        //     return '我后执行'
+        // }
+        // asyncFn().then(result => {
+        //     console.log(result);
+        // })
+        // console.log('我先执行');
+        // async function e() {
+        //     throw new Error('has Error');
+        // }
+        // e().then(success => console.log('成功', success))
+        //     .catch(error => console.log('失败', error));
+
+        // async function awaitReturn() {
+
+        //     return await 1
+        // };
+        // awaitReturn().then(success => console.log('成功', success))
+        //     .catch(error => console.log('失败', error))
+
+
+
+        // const timeoutFn = function (timeout) {
+        //     return new Promise(function (resolve) {
+        //         console.log(timeout)
+        //         return setTimeout(resolve, timeout);
+        //     });
+        // }
+
+        // async function fn() {
+        //     await timeoutFn(1000).then(()=>{
+        //         console.log('1000then')
+        //     });
+        //     await timeoutFn(2000);
+        //     return '完成';
+        // }
+
+        // fn().then(success => console.log(success));
+        function timeout(time) {
+            return new Promise(function (resolve) {
+                return setTimeout(function () {
+                    return resolve(time + 200)
+                }, time);
+            })
+        }
+
+        function first(time) {
+            console.log('第一次延迟了' + time);
+            return timeout(time);
+        }
+        function second(time) {
+            console.log('第二次延迟了' + time);
+            return timeout(time);
+        }
+        function third(time) {
+            console.log('第三次延迟了' + time);
+            return timeout(time);
+        }
+
+        function start() {
+            console.log('START');
+            const time1 = 500;
+            first(time1).then(time2 => second(time2))
+                .then(time3 => third(time3))
+                .then(res => {
+                    console.log('最后一次延迟' + res);
+                    console.log('END');
+                })
+        };
+        // start();
+
+        async function start() {
+            console.log('START');
+            const time1 = 500;
+            const time2 = await first(time1);
+            const time3 = await second(time2);
+            const res = await third(time3);
+            console.log(`最后一次延迟${res}`);
+            console.log('END');
+        }
+        // start();
+        function testSometing() {
+            console.log("testSomething");
+            return "return testSomething";
+        }
+
+        async function testAsync() {
+            console.log("testAsync");
+            return Promise.resolve("hello async");
+        }
+
+        async function test() {
+            console.log("test start...");
+
+            const testFn1 = await testSometing();
+            console.log(testFn1,222);
+
+            const testFn2 = await testAsync();
+            console.log(testFn2);
+
+            console.log('test end...');
+        }
+
+        test();
+
+        var promiseFn = new Promise((resolve) => {
+            console.log("promise START...");
+            resolve("promise RESOLVE");
+        });
+        promiseFn.then((val) => console.log(val));
+
+        console.log("===END===")
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

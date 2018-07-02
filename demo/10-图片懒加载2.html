@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .lzy-load {
+            height: 400px;
+            width: 400px;
+        }
+
+        .lzy-load img {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+        <li class="lzy-load" img-src="./img/picture.jpg"></li>
+    </ul>
+    <script src="./js/throttle.js"></script>
+    <script>
+        var lis = document.getElementsByClassName('lzy-load');
+        var loadImg = function () {
+            for (var i = 0, len = lis.length; i < len; i++) {
+                if (lis[i].getBoundingClientRect().top < document.documentElement.clientHeight && !lis[i].isLoad) {
+                    lis[i].isLoad = true;
+                    var url = lis[i].getAttribute('img-src');
+                    var img = new Image();
+                    // img.onload = function(){}
+                    img.src = url;
+                    lis[i].appendChild(img);
+                }
+            }
+        }
+        loadImg();
+        window.onscroll = throttle(function (e) {
+            loadImg();
+        }, 500);
+    </script>
+</body>
+
+</html>
